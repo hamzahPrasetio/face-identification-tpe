@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from cnn import build_cnn
 from bottleneck import Bottleneck
 
-from identification import get_scores, count_metrics
+from identification import get_scores, calc_metrics
 
 WEIGHTS_DIR = './data/weights/'
 
@@ -22,7 +22,7 @@ dev_y = bottleneck.predict(dev_x, batch_size=BATCH_SIZE)
 
 protocol = np.load('data/dev_protocol.npy')
 tsc, isc = get_scores(dev_y, protocol)
-eer, fars, frrs, dists = count_metrics(tsc, isc)
+eer, fars, frrs, dists = calc_metrics(tsc, isc)
 
 print('EER: {}'.format(eer * 100))
 

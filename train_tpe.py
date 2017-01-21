@@ -5,7 +5,7 @@ import numpy as np
 from cnn import build_cnn
 from tpe import build_tpe
 from bottleneck import Bottleneck
-from identification import get_scores, count_metrics
+from identification import get_scores, calc_metrics
 
 from sklearn.decomposition import PCA
 
@@ -92,7 +92,7 @@ def get_batch(hard=False):
 def test():
     dev_emb2 = tpe_pred.predict(dev_emb)
     tsc, isc = get_scores(dev_emb2, dev_protocol)
-    eer, _, _, _ = count_metrics(tsc, isc)
+    eer, _, _, _ = calc_metrics(tsc, isc)
     return eer
 
 

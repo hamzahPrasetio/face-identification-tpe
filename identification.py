@@ -8,7 +8,7 @@ def get_scores(data_y, protocol):
     return scores[protocol], scores[np.logical_not(protocol)]
 
 
-def count_metrics(targets_scores, imposter_scores):
+def calc_metrics(targets_scores, imposter_scores):
     min_score = np.minimum(np.min(targets_scores), np.min(imposter_scores))
     max_score = np.maximum(np.max(targets_scores), np.max(imposter_scores))
 

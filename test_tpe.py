@@ -3,7 +3,7 @@ import numpy as np
 from cnn import build_cnn
 from tpe import build_tpe
 from bottleneck import Bottleneck
-from identification import get_scores, count_metrics
+from identification import get_scores, calc_metrics
 
 import matplotlib.pyplot as plt
 
@@ -42,7 +42,7 @@ dev_emb2 = tpe_pred.predict(dev_emb)
 
 protocol = np.load('data/dev_protocol.npy')
 tsc, isc = get_scores(dev_emb2, protocol)
-eer, fars, frrs, dists = count_metrics(tsc, isc)
+eer, fars, frrs, dists = calc_metrics(tsc, isc)
 
 print('EER: {}'.format(eer * 100))
 
