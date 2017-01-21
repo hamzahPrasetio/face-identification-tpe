@@ -1,11 +1,13 @@
 # Face identification using CNN + TPE demo
 Face identification demo which implements the [Triplet Probabilistic Embedding for Face Verification and Clustering](https://arxiv.org/abs/1604.05417) work.
 
+![demo app screenshot](https://habrastorage.org/files/f83/9d3/057/f839d305744d45e69660baf2c0986ce6.png)
+
 ### Requirements
  - python3
  - keras
  - dlib
- - scipy-image
+ - scikit-image
 
 ### Usage
 Get all the files from [here](https://yadi.sk/d/zIWpWyX73ACTAg) and put them to the `model` dir. Then start `demo_app1.py`.
