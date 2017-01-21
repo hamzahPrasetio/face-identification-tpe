@@ -8,10 +8,10 @@ Face identification demo which implements the [Triplet Probabilistic Embedding f
  - scipy-image
 
 ### Usage
-Get all the files from [here]() and put them to the `model` dir. Then start `demo_app1.py`.
+Get all the files from [here](https://yadi.sk/d/zIWpWyX73ACTAg) and put them to the `model` dir. Then start `demo_app1.py`.
 
 ### Training
-Download the `face_template.npy` and `shape_predictor_68_face_landmarks.dat` from [here]() and put them to the `model` dir.
+Download the `face_template.npy` and `shape_predictor_68_face_landmarks.dat` from [here](https://yadi.sk/d/zIWpWyX73ACTAg) and put them to the `model` dir.
 
 Place training data in following order:
 ```
