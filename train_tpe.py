@@ -31,13 +31,9 @@ dev_emb = bottleneck.predict(dev_x, batch_size=256)
 
 del train_x
 
-# pca = PCA(n_out)
-# pca.fit(train_emb)
-# W_pca = pca.components_
-# print(W_pca.shape)
-# np.save('data/w_pca', W_pca)
-# exit()
-W_pca = np.load('data/w_pca.npy')
+pca = PCA(n_out)
+pca.fit(train_emb)
+W_pca = pca.components_
 
 tpe, tpe_pred = build_tpe(n_in, n_out, W_pca.T)
 # tpe.load_weights('data/weights/weights.tpe.mineer.h5')
