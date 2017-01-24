@@ -51,7 +51,7 @@ plt.hist(tsc, 20, color='g', normed=True, alpha=0.3)
 plt.hist(isc, 20, color='r', normed=True, alpha=0.3)
 
 plt.figure()
-plt.plot(fars, frrs)
+plt.loglog(fars, frrs)
 plt.show()
 
 for a, b, c in zip(fars, frrs, dists):
