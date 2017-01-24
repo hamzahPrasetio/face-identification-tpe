@@ -77,7 +77,7 @@ class Main(QWidget):
         self.i_pixmap = [None, None]
         self.i_lbl = [None, None]
 
-        self.dist = 0.76666
+        self.dist = 0.85
 
         self.matched = False
 
