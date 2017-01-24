@@ -21,22 +21,20 @@ def calc_metrics(targets_scores, imposter_scores):
     frrs = np.zeros((N,))
     dists = np.zeros((N,))
 
-    mink = float('inf')
+    min_gap = float('inf')
     eer = 0
 
-    i = 0
-    for dist in np.linspace(min_score, max_score, N):
+    for i, dist in enumerate(np.linspace(min_score, max_score, N)):
         far = len(np.where(imposter_scores > dist)[0]) / n_imps
         frr = len(np.where(targets_scores < dist)[0]) / n_tars
         fars[i] = far
         frrs[i] = frr
         dists[i] = dist
-        i += 1
 
-        k = np.abs(far - frr)
+        gap = np.abs(far - frr)
 
-        if k < mink:
-            mink = k
+        if gap < min_gap:
+            min_gap = gap
             eer = (far + frr) / 2
 
     return eer, fars, frrs, dists
