@@ -42,7 +42,7 @@ python application.py --model-path /path/to/assets/
 Using it now on new dataset will be very difficult, so please, don't try. You can read it and use it as a reference
 or you can just use CNN and TPE definitions and write custom training code.**
 
-I'm leaving this here just for the sake of history.
+**I'm leaving this here just for the sake of history.**
 
 1. Download assets `face_template.npy` and `shape_predictor_68_face_landmarks.dat` 
 from [here](https://yadi.sk/d/zIWpWyX73ACTAg) and put them to the `model` dir.
