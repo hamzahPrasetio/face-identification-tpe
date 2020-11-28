@@ -25,9 +25,9 @@ del train_x
 
 # pca = PCA(n_out)
 # pca.fit(train_emb)
-# W_pca = pca.components_
-# print(W_pca.shape)
-# np.save('data/w_pca', W_pca)
+# weights = pca.components_
+# print(weights.shape)
+# np.save('data/w_pca', weights)
 
 W_pca = np.load('data/w_pca.npy')
 

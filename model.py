@@ -2,49 +2,45 @@ import os.path
 
 import numpy as np
 
-from preprocessing import FaceDetector, FaceAligner, clip_to_range
-from cnn import build_cnn
-from tpe import build_tpe
 from bottleneck import Bottleneck
-
+from cnn import build_cnn
+from preprocessing import FaceDetector, FaceAligner, clip_to_range
+from tpe import build_tpe
 
 GREATER_THAN = 32
 BATCH_SIZE = 128
-IMSIZE = 217
-IMBORDER = 5
+IMAGE_SIZE = 217
+IMAGE_BORDER = 5
 
 
-class FaceVerificatorError (Exception):
-    pass
-
-
-class FileNotFoundError (FaceVerificatorError):
+class FaceVerificatorError(Exception):
     pass
 
 
 class FaceVerificator:
-    def __init__(self, model_dir):
-        self._model_dir = model_dir
+    def __init__(self, model_path):
+        self._model_path = model_path
 
         self._model_files = {
-            'shape_predictor': os.path.join(model_dir, 'shape_predictor_68_face_landmarks.dat'),
-            'face_template': os.path.join(model_dir, 'face_template.npy'),
-            'mean': os.path.join(model_dir, 'mean.npy'),
-            'stddev': os.path.join(model_dir, 'stddev.npy'),
-            'cnn_weights': os.path.join(model_dir, 'weights_cnn.h5'),
-            'tpe_weights': os.path.join(model_dir, 'weights_tpe.h5'),
+            'shape_predictor': os.path.join(model_path, 'shape_predictor_68_face_landmarks.dat'),
+            'face_template': os.path.join(model_path, 'face_template.npy'),
+            'mean': os.path.join(model_path, 'mean.npy'),
+            'stddev': os.path.join(model_path, 'stddev.npy'),
+            'cnn_weights': os.path.join(model_path, 'weights_cnn.h5'),
+            'tpe_weights': os.path.join(model_path, 'weights_tpe.h5'),
         }
 
         for model_file in self._model_files.values():
             if not os.path.exists(model_file):
                 raise FileNotFoundError(model_file)
 
-    def initialize_model(self):
         self._mean = np.load(self._model_files['mean'])
         self._stddev = np.load(self._model_files['stddev'])
         self._fd = FaceDetector()
-        self._fa = FaceAligner(self._model_files['shape_predictor'],
-                               self._model_files['face_template'])
+        self._fa = FaceAligner(
+            self._model_files['shape_predictor'],
+            self._model_files['face_template']
+        )
         cnn = build_cnn(227, 266)
         cnn.load_weights(self._model_files['cnn_weights'])
         self._cnn = Bottleneck(cnn, ~1)
@@ -62,7 +58,7 @@ class FaceVerificator:
         if not face_rects:
             return []
 
-        faces = self._fa.align_faces(img, face_rects, dim=IMSIZE, border=IMBORDER)
+        faces = self._fa.align_faces(img, face_rects, dim=IMAGE_SIZE, border=IMAGE_BORDER)
         faces = list(map(self.normalize, faces))
 
         faces_y = self._cnn.predict(faces, batch_size=BATCH_SIZE)
@@ -70,7 +66,8 @@ class FaceVerificator:
 
         return list(zip(face_rects, faces_y))
 
-    def compare_many(self, dist, xs, ys):
+    @staticmethod
+    def compare_many(dist, xs, ys):
         xs = np.array(xs)
         ys = np.array(ys)
         scores = xs @ ys.T
