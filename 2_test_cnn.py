@@ -1,18 +1,21 @@
-import numpy as np
+import json
+
 import matplotlib.pyplot as plt
+import numpy as np
 
-from cnn import build_cnn
 from bottleneck import Bottleneck
-
+from cnn import build_cnn
 from identification import get_scores, calc_metrics
 
-WEIGHTS_DIR = './data/weights/'
-
+WEIGHTS_DIR = 'data/weights/'
 BATCH_SIZE = 32
 
 dev_x = np.load('data/dev_x.npy')
 
-model = build_cnn(227, 266)
+with open('data/meta.json', 'r') as f:
+    meta = json.load(f)
+
+model = build_cnn(227, meta['n_subjects'])
 
 weights_to_load = WEIGHTS_DIR + 'weights.best.h5'
 model.load_weights(weights_to_load)

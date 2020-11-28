@@ -1,33 +1,31 @@
-import numpy as np
-
-from cnn import build_cnn
-from tpe import build_tpe
-from bottleneck import Bottleneck
-from identification import get_scores, calc_metrics
+import json
 
 import matplotlib.pyplot as plt
+import numpy as np
+
+from bottleneck import Bottleneck
+from cnn import build_cnn
+from identification import get_scores, calc_metrics
+from tpe import build_tpe
 
 n_in = 256
 n_out = 256
 
-cnn = build_cnn(227, 266)
+with open('data/meta.json', 'r') as f:
+    meta = json.load(f)
+
+cnn = build_cnn(227, meta['n_subjects'])
 cnn.load_weights('data/weights/weights.best.h5')
 bottleneck = Bottleneck(cnn, ~1)
 
-train_x, train_y = np.load('./data/train_x.npy'), np.load('./data/train_y.npy')
-dev_x = np.load('./data/dev_x.npy')
-dev_protocol = np.load('./data/dev_protocol.npy')
+train_x, train_y = np.load('data/train_x.npy'), np.load('data/train_y.npy')
+dev_x = np.load('data/dev_x.npy')
+dev_protocol = np.load('data/dev_protocol.npy')
 
 train_emb = bottleneck.predict(train_x, batch_size=256)
 dev_emb = bottleneck.predict(dev_x, batch_size=256)
 
 del train_x
-
-# pca = PCA(n_out)
-# pca.fit(train_emb)
-# weights = pca.components_
-# print(weights.shape)
-# np.save('data/w_pca', weights)
 
 W_pca = np.load('data/w_pca.npy')
 
